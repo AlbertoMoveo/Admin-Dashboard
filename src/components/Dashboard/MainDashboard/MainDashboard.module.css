@@ -1,0 +1,63 @@
+.main-dashboard {
+  display: flex;
+  background-color: #24242b;
+  color: #fff;
+  overflow-x: hidden;
+}
+
+.menuButton {
+  background: none;
+  border: none;
+  font-size: 20px;
+  color: #fff;
+  cursor: pointer;
+  background-color: #25252c;
+  display: none;
+}
+
+@media (max-width: 767px) {
+  .menuButton {
+    padding: 5;
+    display: block;
+  }
+}
+
+button:hover {
+  background-color: transparent;
+}
+
+.sidebar {
+  width: 0%;
+  overflow: hidden;
+  transition: width 1s ease;
+  display: none;
+}
+
+.sidebar.open {
+  width: 60%;
+  overflow: hidden;
+  transition: display 1s ease;
+}
+
+.content {
+  flex-grow: 1;
+  padding: 20px;
+  background-color: #24242b;
+  color: #fff;
+  transition: display margin-left 1s ease;
+  display: block;
+}
+
+.content-sidebar-open {
+  transition: display margin-right 1s ease;
+  width: 10%;
+}
+
+@media (max-width: 767px) {
+  .content-sidebar-open {
+    display: none;
+  }
+  .sidebar.open {
+    width: 100%;
+  }
+}

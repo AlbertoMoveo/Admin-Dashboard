@@ -1,4 +1,7 @@
 import React from 'react';
+import trashIcon from '../../../assets/svg/trash-icon.svg';
+import editIcon from '../../../assets/svg/edit-icon.svg';
+import createIcon from '../../../assets/svg/create-icon.svg'; 
 
 import styles from './CollectionTable.module.css';
 
@@ -23,7 +26,7 @@ const CollectionTable = ({ collectionType, data, onEdit, onCreate, onDelete, onI
     <div className={styles['collection-table']}>
       <h2>{collectionType ? collectionType.charAt(0).toUpperCase() + collectionType.slice(1) : ''} List</h2>
       <button onClick={handleCreateClick} className={styles['create-button']}>
-        Create New Entry
+      <img src={createIcon} alt="Create" /> 
       </button>
       <table>
         <thead>
@@ -45,10 +48,10 @@ const CollectionTable = ({ collectionType, data, onEdit, onCreate, onDelete, onI
               <td>{item.name}</td>
               <td>
                 <button className={styles['edit-button']} onClick={() => handleEditClick(item._id)} disabled={selectedItemId === item._id}>
-                  Edit
+                <img src={editIcon} alt="Edit" /> 
                 </button>
                 <button className={styles['delete-button']} onClick={() => handleDeleteClick(item._id)} disabled={selectedItemId === item._id}>
-                  Delete
+                  <img src={trashIcon} alt="Delete" /> 
                 </button>
               </td>
             </tr>

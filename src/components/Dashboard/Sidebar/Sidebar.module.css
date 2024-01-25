@@ -1,11 +1,5 @@
-.container {
-  display: flex;
-  height: 100vh;
-}
-
 .sidebar {
   width: 200px;
-  background-color: #25252c;
   padding: 20px;
   height: 100%;
   font-family: 'Oswald', sans-serif;

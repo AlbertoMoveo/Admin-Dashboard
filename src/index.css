@@ -5,8 +5,14 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #24242b;
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url('./assets/jpg/starry-background.jpg') center/cover fixed no-repeat;
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  background-size: cover;
   color: #fff;
+
+  
 }
 
 code {

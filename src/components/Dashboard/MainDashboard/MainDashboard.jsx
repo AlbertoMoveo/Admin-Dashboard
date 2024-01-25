@@ -5,9 +5,7 @@ import Sidebar from '../Sidebar/Sidebar';
 import CollectionTable from '../CollectionTable/CollectionTable';
 import EditForm from '../EditForm/EditForm';
 import DetailsTable from '../DetailsTable/DetailsTable';
-import ChefController from '../../Controllers/ChefController';
-import DishController from '../../Controllers/DishController';
-import RestaurantController from '../../Controllers/RestaurantController';
+import CreateForm from '../CreateForm/CreateForm';
 
 import styles from './MainDashboard.module.css';
 
@@ -18,6 +16,7 @@ const MainDashboard = () => {
   const [showEditForm, setShowEditForm] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [selectedItemDetails, setSelectedItemDetails] = useState(null);
+  const [showCreateForm, setShowCreateForm] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -42,6 +41,7 @@ const MainDashboard = () => {
     setSelectedItemDetails(null);
     setShowEditForm(false);
     setIsSidebarOpen(false);
+    setShowCreateForm(false);
   }, []);
 
   const toggleSidebar = useCallback(() => {
@@ -52,6 +52,7 @@ const MainDashboard = () => {
     setSelectedItemId(itemId);
     setShowEditForm(true);
     setSelectedItemDetails(null);
+    setShowCreateForm(false);
   }, []);
 
   const handleSaveEdit = useCallback(async (editedItem) => {
@@ -74,40 +75,27 @@ const MainDashboard = () => {
     setShowEditForm(false);
   }, []);
 
-  const renderEditForm = useCallback(() => {
-    if (showEditForm) {
-      const selectedItem = collectionData.find((item) => item._id === selectedItemId);
-      return (
-        <EditForm
-          selectedItem={selectedItem}
-          onSave={handleSaveEdit}
-          onCancel={handleCancelEdit}
-          objectType={selectedCollection}
-        />
-      );
-    }
-    return null;
-  }, [showEditForm, handleSaveEdit, handleCancelEdit, selectedCollection, collectionData, selectedItemId]);
+  const handleCancelCreate = useCallback(() => {
+    setSelectedItemId(null);
+    setShowCreateForm(false);
+  }, []);
 
-  const handleCreate = useCallback(async () => {
+  const handleCreate = useCallback(() => {
+    if(selectedCollection) {
+      setShowEditForm(false);
+      setShowCreateForm(true);
+    }
+  }, [selectedCollection]);
+
+  const handleSaveCreate = useCallback(async (createdItem) => {
     try {
       const collectionName = selectedCollection === 'dish' ? 'dishes' : `${selectedCollection}s`;
-      const controllerMap = {
-        chef: ChefController,
-        dish: DishController,
-        restaurant: RestaurantController,
-      };
-      const selectedController = controllerMap[selectedCollection];
-      if (!selectedController) {
-        console.error('Unsupported collection type:', selectedCollection);
-        return;
-      }
-      const newItem = selectedController.create();
-      if (!newItem) return;
-      const response = await axios.post(`http://localhost:3001/api/v1/${collectionName}`, newItem);
-      const createdItem = response.data;
-      setCollectionData([...collectionData, createdItem]);
-      handleEdit(createdItem._id);
+  
+      const response = await axios.post(`http://localhost:3001/api/v1/${collectionName}`, createdItem);
+      const updatedCollectionData = [...collectionData, response.data];
+      setCollectionData(updatedCollectionData);
+      handleEdit(response.data._id);
+      setShowCreateForm(false);
     } catch (error) {
       console.error(`Error creating ${selectedCollection}:`, error);
     }
@@ -128,20 +116,15 @@ const MainDashboard = () => {
 
   const handleItemSelect = useCallback(async (itemId) => {
     try {
-      if (!selectedCollection) {
-        console.error('No selected collection.');
-        return;
-      }
-
       const collectionName = selectedCollection === 'dish' ? 'dishes' : `${selectedCollection}s`;
       const response = await axios.get(`http://localhost:3001/api/v1/${collectionName}/${itemId}`);
-
       const fetchedItemDetails = response.data;
       setSelectedItemDetails(fetchedItemDetails);
     } catch (error) {
       console.error(`Error fetching details for ${selectedCollection} with ID ${itemId}:`, error);
     }
   }, [selectedCollection]);
+
 
   return (
     <div className={styles['main-dashboard']}>
@@ -159,7 +142,16 @@ const MainDashboard = () => {
           onItemSelect={handleItemSelect}
           selectedItemId={selectedItemId}
         />
-        {renderEditForm()}
+        {showEditForm&&<EditForm
+          onSave={handleSaveEdit}
+          onCancel={handleCancelEdit}
+          objectType={selectedCollection}
+        />}
+        {showCreateForm&&<CreateForm
+          onSave={handleSaveCreate}
+          onCancel={handleCancelCreate}
+          objectType={selectedCollection}
+        />}
         {selectedItemDetails && <DetailsTable selectedItemDetails={selectedItemDetails} />}
       </div>
     </div>

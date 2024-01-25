@@ -31,13 +31,13 @@ table {
 th,
 td {
   padding: 8px;
-  border: 1px solid #444;
+  border: 1px solid #444444;
   text-align: left;
   color: #fff;
 }
 
 th {
-  background-color: #333;
+  background-color: black;
 }
 
 tr {
@@ -73,12 +73,27 @@ button:hover {
 }
 
 .create-button {
-  background-color: #3b3295;
-  margin-bottom: 20px;
+  background-color: transparent;
+}
+
+.create-button img {
+  width: 25px;
+  height: 25px;
+  filter: invert(1) opacity(0.9);
 }
 
 .create-button:hover {
-  background-color: #1d126e;
+  background-color: green;
+}
+
+.edit-button {
+  background-color: transparent;
+}
+
+.edit-button img {
+  width: 25px;
+  height: 25px;
+  filter: invert(1) opacity(0.9);
 }
 
 .edit-button:hover {
@@ -86,11 +101,18 @@ button:hover {
 }
 
 .delete-button {
-  background-color: rgb(194, 27, 27);
+  background-color: transparent;
+  padding: 8px;
+}
+
+.delete-button img {
+  width: 25px;
+  height: 25px;
+  filter: invert(1) opacity(0.9);
 }
 
 .delete-button:hover {
-  background-color: rgb(108, 17, 17);
+  background-color: rgb(163, 30, 30);
 }
 
 @media (max-width: 767px) {

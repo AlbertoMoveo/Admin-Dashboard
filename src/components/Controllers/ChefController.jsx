@@ -1,28 +1,40 @@
+import React from 'react';
+import UploadWidget from '../Dashboard/EditForm/UploadWidget';
+
 class ChefController {
-  static create() {
-    const name = window.prompt('Enter the name for the new Chef:');
-    if (!name) return null;
 
-    const image = window.prompt('Enter the image URL for the new Chef:');
-    if (!image) return null;
-
-    const description = window.prompt('Enter the description for the new Chef:');
-    if (!description) return null;
-
-    return {
-      name,
-      image,
-      description,
+  static renderCreateForm({ newItem, handleChange }) {
+    const handleImageUploadSuccess = (imageUrl) => {
+      handleChange({ target: { name: 'image', value: imageUrl } });
     };
+
+    return (
+      <>
+        <label>Name:</label>
+        <input type="text" name="name" value={newItem.name} onChange={handleChange} />
+        <label>Image:</label>
+        <UploadWidget onSuccess={handleImageUploadSuccess} />
+        <label>Description:</label>
+        <input type="text" name="description" value={newItem.description} onChange={handleChange} />
+        <label>Restaurants:</label>
+        <input type="text" name="restaurants" value={newItem.restaurants} onChange={handleChange} />
+      </>
+    );
   }
 
+  
   static renderEditForm({ editedItem, handleChange }) {
     return (
       <>
         <label>Name:</label>
         <input type="text" name="name" value={editedItem.name} onChange={handleChange} />
         <label>Image:</label>
-        <input type="text" name="image" value={editedItem.image} onChange={handleChange} />
+        <UploadWidget
+          onSuccess={(result) => {
+            const imageUrl = result.info.secure_url;
+            handleChange({ target: { name: 'image', value: imageUrl } });
+          }}
+        />
         <label>Description:</label>
         <input type="text" name="description" value={editedItem.description} onChange={handleChange} />
       </>

@@ -6,6 +6,7 @@ import createIcon from '../../../assets/svg/create-icon.svg';
 import styles from './CollectionTable.module.css';
 
 const CollectionTable = ({ collectionType, data, onEdit, onCreate, onDelete, onItemSelect, selectedItemId }) => {
+  
   const handleEditClick = (itemId) => {
     onEdit(itemId);
   };

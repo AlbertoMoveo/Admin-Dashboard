@@ -10,6 +10,7 @@ import CreateForm from '../CreateForm/CreateForm';
 import styles from './MainDashboard.module.css';
 
 const MainDashboard = () => {
+  const API_URL = 'http://localhost:3001/api/v1/';
   const [selectedCollection, setSelectedCollection] = useState(null);
   const [collectionData, setCollectionData] = useState([]);
   const [selectedItemId, setSelectedItemId] = useState(null);
@@ -23,8 +24,7 @@ const MainDashboard = () => {
       if (selectedCollection) {
         try {
           const collectionName = selectedCollection === 'dish' ? 'dishes' : `${selectedCollection}s`;
-
-          const response = await axios.get(`http://localhost:3001/api/v1/${collectionName}`);
+          const response = await axios.get(`${API_URL}${collectionName}`);
           setCollectionData(response.data);
         } catch (error) {
           console.error(`Error fetching ${selectedCollection}s:`, error);
@@ -48,7 +48,7 @@ const MainDashboard = () => {
     setIsSidebarOpen((prevIsSidebarOpen) => !prevIsSidebarOpen);
   }, []);
 
-  const handleEdit = useCallback((itemId) => {
+  const handleEditSelect = useCallback((itemId) => {
     setSelectedItemId(itemId);
     setShowEditForm(true);
     setSelectedItemDetails(null);
@@ -58,9 +58,9 @@ const MainDashboard = () => {
   const handleSaveEdit = useCallback(async (editedItem) => {
     try {
       const collectionName = selectedCollection === 'dish' ? 'dishes' : `${selectedCollection}s`;
-      await axios.put(`http://localhost:3001/api/v1/${collectionName}/${editedItem._id}`, editedItem);
+      const response = await axios.put(`${API_URL}${collectionName}/${selectedItemId}`, editedItem);
       const updatedCollectionData = collectionData.map((item) =>
-        item._id === editedItem._id ? editedItem : item
+        item._id === selectedItemId ? response.data : item
       );
       setCollectionData(updatedCollectionData);
       setSelectedItemId(null);
@@ -68,16 +68,12 @@ const MainDashboard = () => {
     } catch (error) {
       console.error(`Error updating ${selectedCollection}:`, error);
     }
-  }, [selectedCollection, collectionData]);
+  }, [selectedCollection, collectionData, selectedItemId]);
 
-  const handleCancelEdit = useCallback(() => {
-    setSelectedItemId(null);
-    setShowEditForm(false);
-  }, []);
-
-  const handleCancelCreate = useCallback(() => {
+  const handleCancel = useCallback(() => {
     setSelectedItemId(null);
     setShowCreateForm(false);
+    setShowEditForm(false);
   }, []);
 
   const handleCreate = useCallback(() => {
@@ -90,21 +86,20 @@ const MainDashboard = () => {
   const handleSaveCreate = useCallback(async (createdItem) => {
     try {
       const collectionName = selectedCollection === 'dish' ? 'dishes' : `${selectedCollection}s`;
-  
-      const response = await axios.post(`http://localhost:3001/api/v1/${collectionName}`, createdItem);
+      const response = await axios.post(`${API_URL}${collectionName}`, createdItem);
       const updatedCollectionData = [...collectionData, response.data];
       setCollectionData(updatedCollectionData);
-      handleEdit(response.data._id);
+      handleEditSelect(response.data._id);
       setShowCreateForm(false);
     } catch (error) {
       console.error(`Error creating ${selectedCollection}:`, error);
     }
-  }, [selectedCollection, collectionData, handleEdit]);
+  }, [selectedCollection, collectionData, handleEditSelect]);
 
   const handleDelete = useCallback(async (itemId) => {
     try {
       const collectionName = selectedCollection === 'dish' ? 'dishes' : `${selectedCollection}s`;
-      await axios.delete(`http://localhost:3001/api/v1/${collectionName}/${itemId}`);
+      await axios.delete(`${API_URL}${collectionName}/${itemId}`);
       const updatedCollectionData = collectionData.filter((item) => item._id !== itemId);
       setCollectionData(updatedCollectionData);
       setSelectedItemId(null);
@@ -117,7 +112,7 @@ const MainDashboard = () => {
   const handleItemSelect = useCallback(async (itemId) => {
     try {
       const collectionName = selectedCollection === 'dish' ? 'dishes' : `${selectedCollection}s`;
-      const response = await axios.get(`http://localhost:3001/api/v1/${collectionName}/${itemId}`);
+      const response = await axios.get(`${API_URL}${collectionName}/${itemId}`);
       const fetchedItemDetails = response.data;
       setSelectedItemDetails(fetchedItemDetails);
     } catch (error) {
@@ -136,7 +131,7 @@ const MainDashboard = () => {
         <CollectionTable
           collectionType={selectedCollection}
           data={collectionData}
-          onEdit={handleEdit}
+          onEdit={handleEditSelect}
           onCreate={handleCreate}
           onDelete={handleDelete}
           onItemSelect={handleItemSelect}
@@ -144,12 +139,13 @@ const MainDashboard = () => {
         />
         {showEditForm&&<EditForm
           onSave={handleSaveEdit}
-          onCancel={handleCancelEdit}
+          onCancel={handleCancel}
           objectType={selectedCollection}
+          itemId={selectedItemId}
         />}
         {showCreateForm&&<CreateForm
           onSave={handleSaveCreate}
-          onCancel={handleCancelCreate}
+          onCancel={handleCancel}
           objectType={selectedCollection}
         />}
         {selectedItemDetails && <DetailsTable selectedItemDetails={selectedItemDetails} />}

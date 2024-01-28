@@ -32,7 +32,6 @@ const CreateForm = ({ onSave, onCancel, objectType }) => {
   }, [selectedController, newItem, objectType]);
 
   const handleCreate = () => {
-    console.log("New Chef Object:", newItem);
     onSave(newItem);
     setNewItem({ ...initialNewItem });
   };

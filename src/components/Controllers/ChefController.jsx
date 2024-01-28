@@ -24,17 +24,16 @@ class ChefController {
 
   
   static renderEditForm({ editedItem, handleChange }) {
+    const handleImageUploadSuccess = (imageUrl) => {
+      handleChange({ target: { name: 'image', value: imageUrl } });
+    };
+
     return (
       <>
         <label>Name:</label>
         <input type="text" name="name" value={editedItem.name} onChange={handleChange} />
         <label>Image:</label>
-        <UploadWidget
-          onSuccess={(result) => {
-            const imageUrl = result.info.secure_url;
-            handleChange({ target: { name: 'image', value: imageUrl } });
-          }}
-        />
+        <UploadWidget onSuccess={handleImageUploadSuccess} />
         <label>Description:</label>
         <input type="text" name="description" value={editedItem.description} onChange={handleChange} />
       </>

@@ -1,13 +1,11 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import axios from 'axios';
 
 import Sidebar from '../Sidebar/Sidebar';
 import CollectionTable from '../CollectionTable/CollectionTable';
 import EditForm from '../EditForm/EditForm';
 import DetailsTable from '../DetailsTable/DetailsTable';
-import ChefController from '../../Controllers/ChefController';
-import DishController from '../../Controllers/DishController';
-import RestaurantController from '../../Controllers/RestaurantController';
+import CreateForm from '../CreateForm/CreateForm';
+import { ApiService } from '../../../Services/ApiServices';
 
 import styles from './MainDashboard.module.css';
 
@@ -18,19 +16,16 @@ const MainDashboard = () => {
   const [showEditForm, setShowEditForm] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [selectedItemDetails, setSelectedItemDetails] = useState(null);
+  const [showCreateForm, setShowCreateForm] = useState(false);
 
   useEffect(() => {
-    const fetchData = async () => {
-      if (selectedCollection) {
-        try {
-          const collectionName = selectedCollection === 'dish' ? 'dishes' : `${selectedCollection}s`;
 
-          const response = await axios.get(`http://localhost:3001/api/v1/${collectionName}`);
-          setCollectionData(response.data);
-        } catch (error) {
-          console.error(`Error fetching ${selectedCollection}s:`, error);
-        }
-      }
+    const fetchData = async () => {
+    if (selectedCollection) {
+      const collectionName = selectedCollection === 'dish' ? 'dishes' : `${selectedCollection}s`;
+      const collectionData = await ApiService.getCollection(collectionName);
+      setCollectionData(collectionData);
+    }
     };
 
     fetchData();
@@ -42,106 +37,70 @@ const MainDashboard = () => {
     setSelectedItemDetails(null);
     setShowEditForm(false);
     setIsSidebarOpen(false);
+    setShowCreateForm(false);
   }, []);
 
   const toggleSidebar = useCallback(() => {
     setIsSidebarOpen((prevIsSidebarOpen) => !prevIsSidebarOpen);
   }, []);
 
-  const handleEdit = useCallback((itemId) => {
+  const handleEditSelect = useCallback((itemId) => {
     setSelectedItemId(itemId);
     setShowEditForm(true);
     setSelectedItemDetails(null);
+    setShowCreateForm(false);
   }, []);
 
   const handleSaveEdit = useCallback(async (editedItem) => {
-    try {
-      const collectionName = selectedCollection === 'dish' ? 'dishes' : `${selectedCollection}s`;
-      await axios.put(`http://localhost:3001/api/v1/${collectionName}/${editedItem._id}`, editedItem);
-      const updatedCollectionData = collectionData.map((item) =>
-        item._id === editedItem._id ? editedItem : item
-      );
-      setCollectionData(updatedCollectionData);
-      setSelectedItemId(null);
-      setShowEditForm(false);
-    } catch (error) {
-      console.error(`Error updating ${selectedCollection}:`, error);
-    }
-  }, [selectedCollection, collectionData]);
-
-  const handleCancelEdit = useCallback(() => {
+    const collectionName = selectedCollection === 'dish' ? 'dishes' : `${selectedCollection}s`;
+    const updatedItem = await ApiService.updateItem(collectionName, selectedItemId, editedItem);
+    const updatedCollectionData = collectionData.map((item) =>
+      item._id === selectedItemId ? updatedItem : item);
+    setCollectionData(updatedCollectionData);
     setSelectedItemId(null);
+    setSelectedItemDetails(null);
+    setShowEditForm(false);
+  }, [selectedCollection, selectedItemId, collectionData]);
+  
+
+  const handleCancel = useCallback(() => {
+    setSelectedItemId(null);
+    setShowCreateForm(false);
     setShowEditForm(false);
   }, []);
 
-  const renderEditForm = useCallback(() => {
-    if (showEditForm) {
-      const selectedItem = collectionData.find((item) => item._id === selectedItemId);
-      return (
-        <EditForm
-          selectedItem={selectedItem}
-          onSave={handleSaveEdit}
-          onCancel={handleCancelEdit}
-          objectType={selectedCollection}
-        />
-      );
+  const handleCreate = useCallback(() => {
+    if(selectedCollection) {
+      setShowEditForm(false);
+      setShowCreateForm(true);
     }
-    return null;
-  }, [showEditForm, handleSaveEdit, handleCancelEdit, selectedCollection, collectionData, selectedItemId]);
+  }, [selectedCollection]);
 
-  const handleCreate = useCallback(async () => {
-    try {
-      const collectionName = selectedCollection === 'dish' ? 'dishes' : `${selectedCollection}s`;
-      const controllerMap = {
-        chef: ChefController,
-        dish: DishController,
-        restaurant: RestaurantController,
-      };
-      const selectedController = controllerMap[selectedCollection];
-      if (!selectedController) {
-        console.error('Unsupported collection type:', selectedCollection);
-        return;
-      }
-      const newItem = selectedController.create();
-      if (!newItem) return;
-      const response = await axios.post(`http://localhost:3001/api/v1/${collectionName}`, newItem);
-      const createdItem = response.data;
-      setCollectionData([...collectionData, createdItem]);
-      handleEdit(createdItem._id);
-    } catch (error) {
-      console.error(`Error creating ${selectedCollection}:`, error);
-    }
-  }, [selectedCollection, collectionData, handleEdit]);
+  const handleSaveCreate = useCallback(async (createdItem) => {
+    const collectionName = selectedCollection === 'dish' ? 'dishes' : `${selectedCollection}s`;
+    const response = await ApiService.createItem(collectionName, createdItem)
+    const updatedCollectionData = [...collectionData, response];
+    setCollectionData(updatedCollectionData);
+    setShowCreateForm(false);
+  }, [selectedCollection, collectionData]);
 
   const handleDelete = useCallback(async (itemId) => {
-    try {
-      const collectionName = selectedCollection === 'dish' ? 'dishes' : `${selectedCollection}s`;
-      await axios.delete(`http://localhost:3001/api/v1/${collectionName}/${itemId}`);
-      const updatedCollectionData = collectionData.filter((item) => item._id !== itemId);
-      setCollectionData(updatedCollectionData);
-      setSelectedItemId(null);
-      setShowEditForm(false);
-    } catch (error) {
-      console.error(`Error deleting ${selectedCollection}:`, error);
-    }
+    const collectionName = selectedCollection === 'dish' ? 'dishes' : `${selectedCollection}s`;
+    await ApiService.deleteItem(collectionName, itemId);
+    const updatedCollectionData = collectionData.filter((item) => item._id !== itemId);
+    setCollectionData(updatedCollectionData);
+    setSelectedItemId(null);
+    setShowEditForm(false);
+    setSelectedItemDetails(false);
   }, [selectedCollection, collectionData]);
 
   const handleItemSelect = useCallback(async (itemId) => {
-    try {
-      if (!selectedCollection) {
-        console.error('No selected collection.');
-        return;
-      }
-
-      const collectionName = selectedCollection === 'dish' ? 'dishes' : `${selectedCollection}s`;
-      const response = await axios.get(`http://localhost:3001/api/v1/${collectionName}/${itemId}`);
-
-      const fetchedItemDetails = response.data;
-      setSelectedItemDetails(fetchedItemDetails);
-    } catch (error) {
-      console.error(`Error fetching details for ${selectedCollection} with ID ${itemId}:`, error);
-    }
+    const collectionName = selectedCollection === 'dish' ? 'dishes' : `${selectedCollection}s`;
+    const response = await ApiService.getItemDetails(collectionName, itemId);
+    const fetchedItemDetails = response;
+    setSelectedItemDetails(fetchedItemDetails);
   }, [selectedCollection]);
+
 
   return (
     <div className={styles['main-dashboard']}>
@@ -153,13 +112,23 @@ const MainDashboard = () => {
         <CollectionTable
           collectionType={selectedCollection}
           data={collectionData}
-          onEdit={handleEdit}
+          onEdit={handleEditSelect}
           onCreate={handleCreate}
           onDelete={handleDelete}
           onItemSelect={handleItemSelect}
           selectedItemId={selectedItemId}
         />
-        {renderEditForm()}
+        {showEditForm&&<EditForm
+          onSave={handleSaveEdit}
+          onCancel={handleCancel}
+          objectType={selectedCollection}
+          itemId={selectedItemId}
+        />}
+        {showCreateForm&&<CreateForm
+          onSave={handleSaveCreate}
+          onCancel={handleCancel}
+          objectType={selectedCollection}
+        />}
         {selectedItemDetails && <DetailsTable selectedItemDetails={selectedItemDetails} />}
       </div>
     </div>

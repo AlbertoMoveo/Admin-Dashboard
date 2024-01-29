@@ -1,6 +1,5 @@
 .main-dashboard {
   display: flex;
-  background-color: #24242b;
   color: #fff;
   overflow-x: hidden;
 }
@@ -42,7 +41,6 @@ button:hover {
 .content {
   flex-grow: 1;
   padding: 20px;
-  background-color: #24242b;
   color: #fff;
   transition: display margin-left 1s ease;
   display: block;
@@ -61,3 +59,5 @@ button:hover {
     width: 100%;
   }
 }
+
+

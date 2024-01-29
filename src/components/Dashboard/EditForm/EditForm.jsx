@@ -1,8 +1,16 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import styles from './EditForm.module.css';
+
 import ChefController from '../../Controllers/ChefController';
 import DishController from '../../Controllers/DishController';
 import RestaurantController from '../../Controllers/RestaurantController';
+
+import styles from './EditForm.module.css';
+
+const controllerMap = {
+  chef: ChefController,
+  dish: DishController,
+  restaurant: RestaurantController,
+};
 
 const EditForm = ({ selectedItem, onSave, onCancel, objectType }) => {
   const [editedItem, setEditedItem] = useState({ ...selectedItem });
@@ -16,19 +24,11 @@ const EditForm = ({ selectedItem, onSave, onCancel, objectType }) => {
       const { name, value } = e.target;
       setEditedItem((prevItem) => ({ ...prevItem, [name]: value }));
     };
-
-    const controllerMap = {
-      chef: ChefController,
-      dish: DishController,
-      restaurant: RestaurantController,
-    };
-
     const selectedController = controllerMap[objectType];
     if (!selectedController) {
       console.error('Unsupported object type:', objectType);
       return null;
     }
-
     return <selectedController.renderEditForm editedItem={editedItem} handleChange={handleChange} />;
   }, [objectType, editedItem]);
 

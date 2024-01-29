@@ -1,11 +1,12 @@
 /* eslint-disable jsx-a11y/img-redundant-alt */
 import React from 'react';
 import styles from './DetailsTable.module.css';
+import { ICON_RESOURCES } from '../../../resources/Resources';
 
 const DetailsTable = ({ selectedItemDetails }) => {
   return (
     <div className={styles['details-module']}>
-      <h2>Details</h2>
+      <h2>{ICON_RESOURCES.DETAILS}</h2>
       <table>
         <tbody>
           {Object.entries(selectedItemDetails).map(([key, value]) => (

@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/img-redundant-alt */
 import React from 'react';
 import styles from './DetailsTable.module.css';
 
@@ -10,7 +11,11 @@ const DetailsTable = ({ selectedItemDetails }) => {
           {Object.entries(selectedItemDetails).map(([key, value]) => (
             <tr key={key}>
               <td>{key}</td>
-              <td>{typeof value === 'object' ? JSON.stringify(value) : value}</td>
+              {key === 'image' && typeof value === 'string' && value.match(/\.(jpeg|jpg|gif|png)$/) ? (
+                <td><img src={value} alt="Image" className={styles['has-image']} /></td>
+              ) : (
+                <td>{typeof value === 'object' ? JSON.stringify(value) : value}</td>
+              )}
             </tr>
           ))}
         </tbody>

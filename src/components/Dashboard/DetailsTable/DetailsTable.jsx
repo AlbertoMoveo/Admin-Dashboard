@@ -1,12 +1,12 @@
 /* eslint-disable jsx-a11y/img-redundant-alt */
 import React from 'react';
 import styles from './DetailsTable.module.css';
-import { ICON_RESOURCES } from '../../../resources/Resources';
+import { GENERAL_RESOURCES } from '../../../resources/Resources';
 
 const DetailsTable = ({ selectedItemDetails }) => {
   return (
     <div className={styles['details-module']}>
-      <h2>{ICON_RESOURCES.DETAILS}</h2>
+      <h2>{GENERAL_RESOURCES.DETAILS}</h2>
       <table>
         <tbody>
           {Object.entries(selectedItemDetails).map(([key, value]) => (
@@ -19,6 +19,12 @@ const DetailsTable = ({ selectedItemDetails }) => {
               )}
             </tr>
           ))}
+          {selectedItemDetails.admin !== undefined && (
+            <tr>
+              <td>{GENERAL_RESOURCES.ADMIN}</td>
+              <td>{selectedItemDetails.admin ? 'Admin' : 'User'}</td>
+            </tr>
+          )}
         </tbody>
       </table>
     </div>

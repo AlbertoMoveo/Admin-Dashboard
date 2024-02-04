@@ -78,6 +78,7 @@ const MainDashboard = () => {
 
   const handleSaveCreate = useCallback(async (createdItem) => {
     const collectionName = selectedCollection === 'dish' ? 'dishes' : `${selectedCollection}s`;
+    console.log(createdItem);
     const response = await ApiService.createItem(collectionName, createdItem)
     const updatedCollectionData = [...collectionData, response];
     setCollectionData(updatedCollectionData);

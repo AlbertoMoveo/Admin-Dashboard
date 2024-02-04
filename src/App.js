@@ -1,14 +1,25 @@
 import React from 'react';
-import MainDashboard from './components/Dashboard/MainDashboard/MainDashboard';
-import Header from './components/Header/Header';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
-const App = () => {
+import Header from './components/Header/Header';
+import Login from './components/Login/Login';
+import MainDashboard from './components/Dashboard/MainDashboard/MainDashboard';
+import Auth from './Auth/Auth';
+import UnauthorizedPage from './components/Unauthorized/UnauthorizedPage';
+
+const router = createBrowserRouter([
+  { path: '/', element: <Auth><MainDashboard /></Auth>},
+  { path: '/login', element: <Login />},
+  { path: '/unauthorized', element: <UnauthorizedPage />}
+]);
+
+const AppRoutes = () => {
   return (
-    <div>
-      <Header />
-      <MainDashboard />
-    </div>
+    <>
+    <Header />
+    <RouterProvider router ={router} />
+    </>
   );
 };
 
-export default App;
+export default AppRoutes;

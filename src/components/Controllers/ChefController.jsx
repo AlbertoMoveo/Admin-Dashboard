@@ -12,13 +12,13 @@ class ChefController {
     return (
       <>
         <label>{CHEF_RESOURCES.NAME}:</label>
-        <input type="text" name={CHEF_RESOURCES.NAME.toLowerCase()} value={newItem[CHEF_RESOURCES.NAME.toLowerCase()]} onChange={handleChange} />
+        <input type="text" name={CHEF_RESOURCES.NAME} value={newItem[CHEF_RESOURCES.NAME]} onChange={handleChange} />
         <label>{CHEF_RESOURCES.IMAGE}:</label>
         <UploadWidget onSuccess={handleImageUploadSuccess} />
         <label>{CHEF_RESOURCES.DESCRIPTION}:</label>
-        <input type="text" name={CHEF_RESOURCES.DESCRIPTION.toLowerCase()} value={newItem[CHEF_RESOURCES.DESCRIPTION.toLowerCase()]} onChange={handleChange} />
+        <input type="text" name={CHEF_RESOURCES.DESCRIPTION} value={newItem[CHEF_RESOURCES.DESCRIPTION]} onChange={handleChange} />
         <label>{CHEF_RESOURCES.RESTAURANTS}:</label>
-        <input type="text" name={CHEF_RESOURCES.RESTAURANTS.toLowerCase()} value={newItem[CHEF_RESOURCES.RESTAURANTS.toLowerCase()]} onChange={handleChange} />
+        <input type="text" name={CHEF_RESOURCES.RESTAURANTS} value={newItem[CHEF_RESOURCES.RESTAURANTS]} onChange={handleChange} />
       </>
     );
   }
@@ -32,11 +32,11 @@ class ChefController {
     return (
       <>
         <label>{CHEF_RESOURCES.NAME}:</label>
-        <input type="text" name={CHEF_RESOURCES.NAME.toLowerCase()} value={editedItem[CHEF_RESOURCES.NAME.toLowerCase()]} onChange={handleChange} />
+        <input type="text" name={CHEF_RESOURCES.NAME} value={editedItem[CHEF_RESOURCES.NAME]} onChange={handleChange} />
         <label>{CHEF_RESOURCES.IMAGE}:</label>
         <UploadWidget onSuccess={handleImageUploadSuccess} />
         <label>{CHEF_RESOURCES.DESCRIPTION}:</label>
-        <input type="text" name={CHEF_RESOURCES.DESCRIPTION.toLowerCase()} value={editedItem[CHEF_RESOURCES.DESCRIPTION.toLowerCase()]} onChange={handleChange} />
+        <input type="text" name={CHEF_RESOURCES.DESCRIPTION} value={editedItem[CHEF_RESOURCES.DESCRIPTION]} onChange={handleChange} />
       </>
     );
   }

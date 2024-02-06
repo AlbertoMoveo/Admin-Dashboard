@@ -1,49 +1,51 @@
+import React from 'react';
 import UploadWidget from "../Dashboard/EditForm/UploadWidget";
+import { RESTAURANT_RESOURCES } from '../../resources/Resources';
 
 class RestaurantController {
 
   static renderCreateForm({ newItem, handleChange }) {
     const handleImageUploadSuccess = (imageUrl) => {
-      handleChange({ target: { name: 'image', value: imageUrl } });
+      handleChange({ target: { name: RESTAURANT_RESOURCES.IMAGE, value: imageUrl } });
     };
 
     return (
       <>
-        <label>Name:</label>
-        <input type="text" name="name" value={newItem.name} onChange={handleChange} />
-        <label>Image:</label>
+        <label>{RESTAURANT_RESOURCES.NAME}:</label>
+        <input type="text" name={RESTAURANT_RESOURCES.NAME} value={newItem[RESTAURANT_RESOURCES.NAME]} onChange={handleChange} />
+        <label>{RESTAURANT_RESOURCES.IMAGE}:</label>
         <UploadWidget onSuccess={handleImageUploadSuccess} />
-        <label>Rating:</label>
-        <input type="number" name="rating" value={newItem.rating} onChange={handleChange} />
-        <label>Chef ID:</label>
-        <input type="text" name="chef" value={newItem.chef} onChange={handleChange} />
-        <label>Chef Name:</label>
-        <input type="text" name="chefName" value={newItem.chefName} onChange={handleChange} />
-        <label>Dishes:</label>
-        <input type="text" name="dishes" value={newItem.dishes} onChange={handleChange} />
+        <label>{RESTAURANT_RESOURCES.RATING}:</label>
+        <input type="number" name={RESTAURANT_RESOURCES.RATING} value={newItem[RESTAURANT_RESOURCES.RATING]} onChange={handleChange} />
+        <label>{RESTAURANT_RESOURCES.CHEF_ID}:</label>
+        <input type="text" name={RESTAURANT_RESOURCES.CHEF_ID} value={newItem[RESTAURANT_RESOURCES.CHEF_ID]} onChange={handleChange} />
+        <label>{RESTAURANT_RESOURCES.CHEF_NAME}:</label>
+        <input type="text" name={RESTAURANT_RESOURCES.CHEF_NAME} value={newItem[RESTAURANT_RESOURCES.CHEF_NAME]} onChange={handleChange} />
+        <label>{RESTAURANT_RESOURCES.DISHES}:</label>
+        <input type="text" name={RESTAURANT_RESOURCES.DISHES} value={newItem[RESTAURANT_RESOURCES.DISHES]} onChange={handleChange} />
       </>
     );
   }
 
   static renderEditForm({ editedItem, handleChange }) {
     const handleImageUploadSuccess = (imageUrl) => {
-      handleChange({ target: { name: 'image', value: imageUrl } });
+      handleChange({ target: { name: RESTAURANT_RESOURCES.IMAGE, value: imageUrl } });
     };
-    
+
     return (
       <>
-        <label>Name:</label>
-        <input type="text" name="name" value={editedItem.name} onChange={handleChange} />
-        <label>Image:</label>
+        <label>{RESTAURANT_RESOURCES.NAME}:</label>
+        <input type="text" name={RESTAURANT_RESOURCES.NAME} value={editedItem[RESTAURANT_RESOURCES.NAME]} onChange={handleChange} />
+        <label>{RESTAURANT_RESOURCES.IMAGE}:</label>
         <UploadWidget onSuccess={handleImageUploadSuccess} />
-        <label>Rating:</label>
-        <input type="number" name="rating" value={editedItem.rating} onChange={handleChange} />
-        <label>Chef ID:</label>
-        <input type="text" name="chef" value={editedItem.chef} onChange={handleChange} />
-        <label>Chef Name:</label>
-        <input type="text" name="chefName" value={editedItem.chefName} onChange={handleChange} />
-        <label>Dishes:</label>
-        <input type="text" name="dishes" value={editedItem.dishes} onChange={handleChange} />
+        <label>{RESTAURANT_RESOURCES.RATING}:</label>
+        <input type="number" name={RESTAURANT_RESOURCES.RATING} value={editedItem[RESTAURANT_RESOURCES.RATING]} onChange={handleChange} />
+        <label>{RESTAURANT_RESOURCES.CHEF_ID}:</label>
+        <input type="text" name={RESTAURANT_RESOURCES.CHEF_ID} value={editedItem[RESTAURANT_RESOURCES.CHEF_ID]} onChange={handleChange} />
+        <label>{RESTAURANT_RESOURCES.CHEF_NAME}:</label>
+        <input type="text" name={RESTAURANT_RESOURCES.CHEF_NAME} value={editedItem[RESTAURANT_RESOURCES.CHEF_NAME]} onChange={handleChange} />
+        <label>{RESTAURANT_RESOURCES.DISHES}:</label>
+        <input type="text" name={RESTAURANT_RESOURCES.DISHES} value={editedItem[RESTAURANT_RESOURCES.DISHES]} onChange={handleChange} />
       </>
     );
   }

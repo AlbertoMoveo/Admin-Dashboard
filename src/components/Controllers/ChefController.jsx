@@ -1,23 +1,24 @@
 import React from 'react';
 import UploadWidget from '../Dashboard/EditForm/UploadWidget';
+import { CHEF_RESOURCES } from '../../resources/Resources';
 
 class ChefController {
 
   static renderCreateForm({ newItem, handleChange }) {
     const handleImageUploadSuccess = (imageUrl) => {
-      handleChange({ target: { name: 'image', value: imageUrl } });
+      handleChange({ target: { name: CHEF_RESOURCES.IMAGE, value: imageUrl } });
     };
 
     return (
       <>
-        <label>Name:</label>
-        <input type="text" name="name" value={newItem.name} onChange={handleChange} />
-        <label>Image:</label>
+        <label>{CHEF_RESOURCES.NAME}:</label>
+        <input type="text" name={CHEF_RESOURCES.NAME} value={newItem[CHEF_RESOURCES.NAME]} onChange={handleChange} />
+        <label>{CHEF_RESOURCES.IMAGE}:</label>
         <UploadWidget onSuccess={handleImageUploadSuccess} />
-        <label>Description:</label>
-        <input type="text" name="description" value={newItem.description} onChange={handleChange} />
-        <label>Restaurants:</label>
-        <input type="text" name="restaurants" value={newItem.restaurants} onChange={handleChange} />
+        <label>{CHEF_RESOURCES.DESCRIPTION}:</label>
+        <input type="text" name={CHEF_RESOURCES.DESCRIPTION} value={newItem[CHEF_RESOURCES.DESCRIPTION]} onChange={handleChange} />
+        <label>{CHEF_RESOURCES.RESTAURANTS}:</label>
+        <input type="text" name={CHEF_RESOURCES.RESTAURANTS} value={newItem[CHEF_RESOURCES.RESTAURANTS]} onChange={handleChange} />
       </>
     );
   }
@@ -25,17 +26,17 @@ class ChefController {
   
   static renderEditForm({ editedItem, handleChange }) {
     const handleImageUploadSuccess = (imageUrl) => {
-      handleChange({ target: { name: 'image', value: imageUrl } });
+      handleChange({ target: { name: CHEF_RESOURCES.IMAGE, value: imageUrl } });
     };
 
     return (
       <>
-        <label>Name:</label>
-        <input type="text" name="name" value={editedItem.name} onChange={handleChange} />
-        <label>Image:</label>
+        <label>{CHEF_RESOURCES.NAME}:</label>
+        <input type="text" name={CHEF_RESOURCES.NAME} value={editedItem[CHEF_RESOURCES.NAME]} onChange={handleChange} />
+        <label>{CHEF_RESOURCES.IMAGE}:</label>
         <UploadWidget onSuccess={handleImageUploadSuccess} />
-        <label>Description:</label>
-        <input type="text" name="description" value={editedItem.description} onChange={handleChange} />
+        <label>{CHEF_RESOURCES.DESCRIPTION}:</label>
+        <input type="text" name={CHEF_RESOURCES.DESCRIPTION} value={editedItem[CHEF_RESOURCES.DESCRIPTION]} onChange={handleChange} />
       </>
     );
   }

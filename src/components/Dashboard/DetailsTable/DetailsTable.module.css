@@ -43,3 +43,9 @@
 .details-module button:hover {
   background-color: #2077b3;
 }
+
+.has-image {
+  border-radius: 100%;
+  height: 50px;
+  width: 50px;
+}

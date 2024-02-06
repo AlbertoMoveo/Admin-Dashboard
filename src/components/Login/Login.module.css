@@ -1,0 +1,63 @@
+/* Login.module.css */
+.body-login {
+  font-family: Arial, sans-serif;
+  background-color: black;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.container-login {
+  display: grid;
+  justify-content: space-around;
+  background-color: whitesmoke;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.h2-login {
+  text-align: center;
+  margin-bottom: 20px;
+  color: black;
+}
+
+.form-login {
+  display: flex;
+  flex-direction: column;
+}
+
+.label-login {
+  margin-bottom: 5px;
+  color: black;
+}
+
+.input-email-login,
+.input-password-login {
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  color: black;
+}
+
+.button-login {
+  padding: 10px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.button-login:hover {
+  background-color: #0056b3 !important;
+}
+
+.error-message-login {
+  color: red;
+  margin-top: 10px;
+}

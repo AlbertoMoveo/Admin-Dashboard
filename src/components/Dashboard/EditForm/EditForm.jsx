@@ -3,13 +3,16 @@ import React, { useState, useEffect, useCallback } from 'react';
 import ChefController from '../../Controllers/ChefController';
 import DishController from '../../Controllers/DishController';
 import RestaurantController from '../../Controllers/RestaurantController';
+import { GENERAL_RESOURCES } from '../../../resources/Resources';
 
 import styles from './EditForm.module.css';
+import UserController from '../../Controllers/UserController';
 
 const controllerMap = {
   chef: ChefController,
   dish: DishController,
   restaurant: RestaurantController,
+  user: UserController
 };
 
 const EditForm = ({ selectedItem, onSave, onCancel, objectType }) => {
@@ -26,7 +29,6 @@ const EditForm = ({ selectedItem, onSave, onCancel, objectType }) => {
     };
     const selectedController = controllerMap[objectType];
     if (!selectedController) {
-      console.error('Unsupported object type:', objectType);
       return null;
     }
     return <selectedController.renderEditForm editedItem={editedItem} handleChange={handleChange} />;
@@ -38,14 +40,14 @@ const EditForm = ({ selectedItem, onSave, onCancel, objectType }) => {
 
   return (
     <div className={styles['edit-form']}>
-      <h2>Edit {editedItem.name}</h2>
+      <h2>{GENERAL_RESOURCES.EDIT} {editedItem.name}</h2>
       <form>
         {renderInputFields()}
         <button type="button" onClick={handleSave} className={styles['edit-button']} >
-          Save
+          {GENERAL_RESOURCES.SAVE}
         </button>
         <button type="button" onClick={onCancel} className={styles['delete-button']}>
-          Cancel
+          {GENERAL_RESOURCES.CANCEL}
         </button>
       </form>
     </div>

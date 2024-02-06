@@ -54,4 +54,15 @@ export const CHEF_RESOURCES = {
     USER: 'user'
   }
 
+  export const ERROR_MESSAGES = {
+    INVALID_CREDENTIALS: 'Invalid email or password',
+    NETWORK_ERROR: 'Network error. Please try again later.',
+  };
+
+  export const UNAUTHORIZED_RESOURCES = {
+    UNAUTHORIZED_PAGE_TITLE: 'Unauthorized Access',
+    UNAUTHORIZED_PAGE_MESSAGE: 'Please log in to access this page.',
+    LOGIN_PAGE_LINK_TEXT: 'Go to Login Page'
+  };
+  
   

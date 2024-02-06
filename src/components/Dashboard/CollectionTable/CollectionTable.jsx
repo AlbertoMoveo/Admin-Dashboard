@@ -35,14 +35,15 @@ const CollectionTable = ({ collectionType, data, onEdit, onCreate, onDelete, onI
           <tr>
             <th>{GENERAL_RESOURCES.ID}</th>
             <th>{GENERAL_RESOURCES.NAME}</th>
-            {data.some(item => item.chefName) && <th>{GENERAL_RESOURCES.CHEF}</th>}
-            {data.some(item => item.image) && <th>{GENERAL_RESOURCES.IMAGE}</th>}
-            {data.some(item => item.admin !== undefined) && <th>{GENERAL_RESOURCES.ADMIN}</th>}
+            {data && data.some(item => item.chefName) && <th>{GENERAL_RESOURCES.CHEF}</th>}
+            {data && data.some(item => item.image) && <th>{GENERAL_RESOURCES.IMAGE}</th>}
+            {data && data.some(item => item.admin !== undefined) && <th>{GENERAL_RESOURCES.ADMIN}</th>}
+
             <th>{GENERAL_RESOURCES.ACTION}</th>
           </tr>
         </thead>
         <tbody>
-          {data.map((item) => (
+        {data && data.map((item) => (
             <tr
               key={item._id}
               className={`${selectedItemId === item._id ? styles['selected-item'] : ''}`}

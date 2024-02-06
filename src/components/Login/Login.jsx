@@ -3,6 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import styles from './Login.module.css';
 
+import { ERROR_MESSAGES } from '../../resources/Resources';
+import { ROUTES } from '../../Routes/Routes';
+
 const Login = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
@@ -15,24 +18,24 @@ const Login = () => {
     try {
       const encryptedPassword = btoa(password);
       const tokenResponse = await checkPassword(email, encryptedPassword);
-      const { token } = tokenResponse.data;
+      const { token } = tokenResponse;
       if (token) {
         sessionStorage.setItem('token', token);
-        navigate('/');
+        navigate(ROUTES.HOMEPAGE);
         return;
       }
-      setError('Invalid email or password');
+      setError(ERROR_MESSAGES.INVALID_CREDENTIALS);
     } catch (err) {
-      setError('Invalid email or password'); 
+      setError(ERROR_MESSAGES.NETWORK_ERROR);
     }
   };
 
   const checkPassword = async (email, password) => {
     try {
-      return await axios.post(`${API_URL}users/check-password`, { email, password });
+      const response = await axios.post(`${API_URL}users/check-password`, { email, password });
+      return response.data;
     } catch (err) {
-      console.error(err);
-      return false;
+      throw new Error(ERROR_MESSAGES.INVALID_CREDENTIALS);
     }
   };
   

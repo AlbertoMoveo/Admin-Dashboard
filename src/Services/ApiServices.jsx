@@ -1,4 +1,5 @@
 import axios from 'axios';
+// import { useNavigate } from 'react-router-dom';
 
 const API_URL = 'http://localhost:3001/api/v1/';
 
@@ -79,3 +80,17 @@ axios.interceptors.response.use(
     return Promise.reject(error);
   }
 );
+
+// axios.interceptors.response.use(
+//   (response) => {
+//     return response;
+//   },
+//   (error) => {
+//     if (error.response && error.response.status === 401) {
+//       const navigate = useNavigate();
+//       sessionStorage.removeItem('token');
+//       navigate('/unauthorized');
+//     }
+//     return Promise.reject(error);
+//   }
+// );

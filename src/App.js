@@ -7,10 +7,12 @@ import MainDashboard from './components/Dashboard/MainDashboard/MainDashboard';
 import Auth from './Auth/Auth';
 import UnauthorizedPage from './components/Unauthorized/UnauthorizedPage';
 
+import { ROUTES } from './Routes/Routes';
+
 const router = createBrowserRouter([
-  { path: '/', element: <Auth><MainDashboard /></Auth>},
-  { path: '/login', element: <Login />},
-  { path: '/unauthorized', element: <UnauthorizedPage />}
+  { path: ROUTES.HOMEPAGE, element: <Auth><MainDashboard /></Auth>},
+  { path: ROUTES.LOGIN, element: <Login />},
+  { path: ROUTES.UNAUTHORIZED, element: <UnauthorizedPage />}
 ]);
 
 const AppRoutes = () => {

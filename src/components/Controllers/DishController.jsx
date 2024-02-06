@@ -12,17 +12,17 @@ class DishController {
     return (
       <>
         <label>{DISH_RESOURCES.NAME}:</label>
-        <input type="text" name={DISH_RESOURCES.NAME.toLowerCase()} value={newItem[DISH_RESOURCES.NAME.toLowerCase()]} onChange={handleChange} />
+        <input type="text" name={DISH_RESOURCES.NAME} value={newItem[DISH_RESOURCES.NAME]} onChange={handleChange} />
         <label>{DISH_RESOURCES.PRICE}:</label>
-        <input type="number" name={DISH_RESOURCES.PRICE.toLowerCase()} value={newItem[DISH_RESOURCES.PRICE.toLowerCase()]} onChange={handleChange} />
+        <input type="number" name={DISH_RESOURCES.PRICE} value={newItem[DISH_RESOURCES.PRICE]} onChange={handleChange} />
         <label>{DISH_RESOURCES.RESTAURANT}:</label>
-        <input type="text" name={DISH_RESOURCES.RESTAURANT.toLowerCase()} value={newItem[DISH_RESOURCES.RESTAURANT.toLowerCase()]} onChange={handleChange} />
+        <input type="text" name={DISH_RESOURCES.RESTAURANT} value={newItem[DISH_RESOURCES.RESTAURANT]} onChange={handleChange} />
         <label>{DISH_RESOURCES.IMAGE}:</label>
         <UploadWidget onSuccess={handleImageUploadSuccess} />
         <label>{DISH_RESOURCES.TAGS}:</label>
-        <input type="text" name={DISH_RESOURCES.TAGS.toLowerCase()} value={newItem[DISH_RESOURCES.TAGS.toLowerCase()]} onChange={handleChange} />
+        <input type="text" name={DISH_RESOURCES.TAGS} value={newItem[DISH_RESOURCES.TAGS]} onChange={handleChange} />
         <label>{DISH_RESOURCES.DESCRIPTION}:</label>
-        <input type="text" name={DISH_RESOURCES.DESCRIPTION.toLowerCase()} value={newItem[DISH_RESOURCES.DESCRIPTION.toLowerCase()]} onChange={handleChange} />
+        <input type="text" name={DISH_RESOURCES.DESCRIPTION} value={newItem[DISH_RESOURCES.DESCRIPTION]} onChange={handleChange} />
       </>
     );
   }
@@ -35,13 +35,13 @@ class DishController {
     return (
       <>
         <label>{DISH_RESOURCES.NAME}:</label>
-        <input type="text" name={DISH_RESOURCES.NAME.toLowerCase()} value={editedItem[DISH_RESOURCES.NAME.toLowerCase()]} onChange={handleChange} />
+        <input type="text" name={DISH_RESOURCES.NAME} value={editedItem[DISH_RESOURCES.NAME]} onChange={handleChange} />
         <label>{DISH_RESOURCES.PRICE}:</label>
-        <input type="number" name={DISH_RESOURCES.PRICE.toLowerCase()} value={editedItem[DISH_RESOURCES.PRICE.toLowerCase()]} onChange={handleChange} />
+        <input type="number" name={DISH_RESOURCES.PRICE} value={editedItem[DISH_RESOURCES.PRICE]} onChange={handleChange} />
         <label>{DISH_RESOURCES.IMAGE}:</label>
         <UploadWidget onSuccess={handleImageUploadSuccess} />
         <label>{DISH_RESOURCES.DESCRIPTION}:</label>
-        <input type="text" name={DISH_RESOURCES.DESCRIPTION.toLowerCase()} value={editedItem[DISH_RESOURCES.DESCRIPTION.toLowerCase()]} onChange={handleChange} />
+        <input type="text" name={DISH_RESOURCES.DESCRIPTION} value={editedItem[DISH_RESOURCES.DESCRIPTION]} onChange={handleChange} />
       </>
     );
   }

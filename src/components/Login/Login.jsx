@@ -11,7 +11,7 @@ const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-  const API_URL = 'http://localhost:3001/api/v1/';
+  const API_URL = 'http://ec2-16-171-9-90.eu-north-1.compute.amazonaws.com:3001/api/v1/';
 
   const handleSubmit = async (e) => {
     e.preventDefault();

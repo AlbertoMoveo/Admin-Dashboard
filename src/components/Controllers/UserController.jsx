@@ -8,7 +8,12 @@ class UserController {
       const value = e.target.value === 'true';
       handleChange({ target: { name: USER_RESOURCES.ADMIN, value } });
     };
-    const fields=[{name: USER_RESOURCES.NAME, type:'text'},{name: USER_RESOURCES.SURNAME, type:'text'},{name: USER_RESOURCES.EMAIL, type:'text'},{name: USER_RESOURCES.PASSWORD, type:'text'}]
+    
+    const fields=[
+      {name: USER_RESOURCES.NAME, type:'text'},
+    {name: USER_RESOURCES.SURNAME, type:'text'},
+    {name: USER_RESOURCES.EMAIL, type:'text'},
+    {name: USER_RESOURCES.PASSWORD, type:'text'}]
 
     return (
       <>

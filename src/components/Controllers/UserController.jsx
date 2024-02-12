@@ -10,7 +10,7 @@ class UserController {
     };
     
     const fields=[
-      {name: USER_RESOURCES.NAME, type:'text'},
+    {name: USER_RESOURCES.NAME, type:'text'},
     {name: USER_RESOURCES.SURNAME, type:'text'},
     {name: USER_RESOURCES.EMAIL, type:'text'},
     {name: USER_RESOURCES.PASSWORD, type:'text'}]
@@ -21,6 +21,7 @@ class UserController {
         <label>{field.name}:</label>
         <input type={field.type}name={field.name} value={newItem[field.name]} onChange={handleChange} />
       </>)}
+      <label>{USER_RESOURCES.ADMIN}:</label>
     <select name={USER_RESOURCES.ADMIN} value={newItem[USER_RESOURCES.ADMIN]} onChange={handleAdminChange}>
         <option value={'false'}>False</option>
         <option value={'true'}>True</option>

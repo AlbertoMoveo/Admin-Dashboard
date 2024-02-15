@@ -9,6 +9,7 @@ class RestaurantController {
       handleChange({ target: { name: RESTAURANT_RESOURCES.IMAGE, value: imageUrl } });
     };
 
+
     return (
       <>
         <label>{RESTAURANT_RESOURCES.NAME}:</label>
@@ -23,6 +24,8 @@ class RestaurantController {
         <input type="text" name={RESTAURANT_RESOURCES.CHEF_NAME} value={newItem[RESTAURANT_RESOURCES.CHEF_NAME]} onChange={handleChange} />
         <label>{RESTAURANT_RESOURCES.DISHES}:</label>
         <input type="text" name={RESTAURANT_RESOURCES.DISHES} value={newItem[RESTAURANT_RESOURCES.DISHES]} onChange={handleChange} />
+
+        <label>{RESTAURANT_RESOURCES.CHEF_ID}:</label>
       </>
     );
   }

@@ -17,6 +17,7 @@ const MainDashboard = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [selectedItemDetails, setSelectedItemDetails] = useState(null);
   const [showCreateForm, setShowCreateForm] = useState(false);
+  const [chefData, setChefData] = useState([]);
 
   useEffect(() => {
 
@@ -69,10 +70,14 @@ const MainDashboard = () => {
     setShowEditForm(false);
   }, []);
 
-  const handleCreate = useCallback(() => {
+  const handleCreate = useCallback(async () => {
     if(selectedCollection) {
       setShowEditForm(false);
       setShowCreateForm(true);
+    }
+    if(selectedCollection === 'restaurant') {
+      const chefs = await ApiService.getCollection('chefs');
+      setChefData(chefs);
     }
   }, [selectedCollection]);
 
@@ -128,6 +133,7 @@ const MainDashboard = () => {
           onSave={handleSaveCreate}
           onCancel={handleCancel}
           objectType={selectedCollection}
+          chefs={chefData}
         />}
         {selectedItemDetails && <DetailsTable selectedItemDetails={selectedItemDetails} />}
       </div>
